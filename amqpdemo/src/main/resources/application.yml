@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: rabbit_demo
+  rabbitmq:
+    host: 192.168.115.101
+    port: 5672
+    username: admin
+    password: 123
+    virtual-host: /hello
+      #确认消息已发送到交换机(Exchange)
+      #确认消息已发送到队列(Queue)
+    publisher-returns: true
+    publisher-confirm-type: correlated
