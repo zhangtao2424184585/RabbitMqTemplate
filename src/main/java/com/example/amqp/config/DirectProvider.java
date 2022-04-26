@@ -1,9 +1,6 @@
 package com.example.amqp.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,15 +13,42 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DirectProvider {
     @Bean
-    public Queue testQueue(){
-        return new Queue("testqueue",false);
+    public Queue testQueue() {
+        return new Queue("testqueue", false);
     }
+
     @Bean
-    public DirectExchange directExchange(){
+    public DirectExchange directExchange() {
         return new DirectExchange("testdirectexchange");
     }
+
     @Bean
-    public Binding binding(){
+    public Binding binding() {
         return BindingBuilder.bind(testQueue()).to(directExchange()).with("");
+    }
+
+    @Bean
+    public Queue queue() {
+        return new Queue("queue", false, false, false);
+    }
+
+    @Bean
+    public Queue queue1() {
+        return new Queue("queue1", false, false, false);
+    }
+
+    @Bean
+    public TopicExchange topicExchange() {
+        return new TopicExchange("ceshitopic");
+    }
+
+    @Bean
+    public Binding binding3() {
+        return BindingBuilder.bind(queue()).to(topicExchange()).with("A.1");
+    }
+
+    @Bean
+    public Binding binding1() {
+        return BindingBuilder.bind(queue1()).to(topicExchange()).with("A.2");
     }
 }
